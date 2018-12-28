@@ -11,6 +11,7 @@ import {TodoFormGroup} from '../../form-groups/todo.form-group';
 export class UserPageComponent implements OnInit {
   user: User;
   userFormGroup: UserFormGroup;
+  userTesting: User;
 
   constructor(
     private userService: UserService
@@ -19,6 +20,8 @@ export class UserPageComponent implements OnInit {
   ngOnInit() {
     this.userService.getUser('kdkdkd').subscribe(user => {
       this.userFormGroup = new UserFormGroup(user);
+      this.userTesting = new User(user);
+      console.log('User Interface: ', this.userTesting);
     });
   }
 
