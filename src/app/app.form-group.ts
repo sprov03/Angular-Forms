@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
-export class AppFormGroup<T> extends FormGroup {
+export class AppFormGroup extends FormGroup {
   constructor() {
     super({});
   }
@@ -25,7 +25,22 @@ export class AppFormGroup<T> extends FormGroup {
     }
   }
 
-  getRawValue(): T {
-    return super.getRawValue();
+  isInvalidRecursive(formGroup: FormGroup | FormArray = this): boolean {
+    if (formGroup.invalid) {
+      return true;
+    }
+
+    for (const key in formGroup.controls) {
+      const control = formGroup.controls[key];
+      if (control instanceof FormControl) {
+        if (control.invalid) {
+          return true;
+        }
+      } else {
+        return this.isInvalidRecursive(control as FormGroup);
+      }
+    }
+
+    return false;
   }
 }

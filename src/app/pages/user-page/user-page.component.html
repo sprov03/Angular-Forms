@@ -1,0 +1,13 @@
+<h1>User Page</h1>
+<form [formGroup]="userFormGroup">
+  <app-form-field label="First Name" [control]="userFormGroup.controls.firstName">
+    <input [formControl]="userFormGroup.controls.firstName">
+  </app-form-field>
+  <app-form-field label="Last Name" [control]="userFormGroup.controls.lastName">
+    <input [formControl]="userFormGroup.controls.lastName">
+  </app-form-field>
+  <app-todo-form [formGroup]="todoFormGroup" *ngFor="let todoFormGroup of userFormGroup.controls.todos.controls"></app-todo-form>
+  <button (click)="addTodo()">Add Todo</button>
+</form>
+
+<button (click)="saveUser()">Save</button>

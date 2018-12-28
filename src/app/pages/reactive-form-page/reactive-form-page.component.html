@@ -2,27 +2,34 @@
 
 <section>
   <form *ngIf="formGroup" [formGroup]="formGroup">
-    <input [formControl]="formGroup.controls.userType">
+    <app-form-field label="First Name" [control]="formGroup.controls.firstName">
+      <input [formControl]="formGroup.controls.firstName">
+    </app-form-field>
 
-    <select [formControl]="formGroup.controls.userType">
-      <option [ngValue]="null">None</option>
-      <option [ngValue]="option.value" *ngFor="let option of UserType | enum">{{option.label}}</option>
-    </select>
-    <div style="color: red;" *ngFor="let error of formGroup.controls.userType.errors | errors">
-      {{error.message}}
-    </div>
+    <app-form-field
+      [control]="formGroup.controls.userType"
+      label="User Type">
+      <select [formControl]="formGroup.controls.userType">
+        <option [ngValue]="null">None</option>
+        <option [ngValue]="option.value" *ngFor="let option of UserType | enum">{{option.label}}</option>
+      </select></app-form-field>
 
     <button (click)="formGroup.addAlias()">Add Alias</button>
     <br>
     <ng-container formArrayName="aliases" *ngFor="let alias of formGroup.controls.aliases.controls; let index = index">
-      <input [formControl]="alias">
+      <app-form-field label="Alias" [control]="alias">
+        <input [formControl]="alias">
+      </app-form-field>
       <button (click)="formGroup.removeAlias(index)">delete</button>
       <br>
     </ng-container>
     <ng-container *ngFor="let catFormGroup of formGroup.controls.cats.controls; let index = index">
+      <h2>Cat Form Group: {{index}}</h2>
       <app-cat-form [catFormGroup]="catFormGroup"></app-cat-form>
+      <br>
       <button (click)="formGroup.removeCat(index)">delete</button>
     </ng-container>
+    <br>
     <button (click)="formGroup.addCat()">Add Cat</button>
     <button (click)="logValue()">Get Raw Value</button>
   </form>

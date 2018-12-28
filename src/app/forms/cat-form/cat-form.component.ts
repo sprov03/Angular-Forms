@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CatFormGroup} from '../../pages/reactive-form-page/reactive-form-page.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {CatFormGroup} from '../../form-groups/cat.form-group';
 
 @Component({
   selector: 'app-cat-form',

@@ -10,6 +10,8 @@ export class ErrorsPipe implements PipeTransform {
       if (!errors.hasOwnProperty(error)) {
         return;
       }
+      console.log('Error: ', error);
+      console.log('Messag: ', errors[error]);
 
       errorsAsArray.push({
         type: error,

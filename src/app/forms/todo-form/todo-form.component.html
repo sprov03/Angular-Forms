@@ -1,0 +1,8 @@
+<form [formGroup]="formGroup">
+  <app-form-field label="Label" [control]="formGroup.controls.label">
+    <input [formControl]="formGroup.controls.label">
+  </app-form-field>
+  <app-form-field label="Description" [control]="formGroup.controls.description">
+    <textarea [formControl]="formGroup.controls.description"></textarea>
+  </app-form-field>
+</form>

@@ -1,6 +1,16 @@
 <ng-container [formGroup]="catFormGroup">
-  <input [formControl]="catFormGroup.controls.name">
-  <input [formControl]="catFormGroup.controls.color">
-  <br>
+  <app-form-field
+    label="Name"
+    [control]="catFormGroup.controls.name"
+    [group]="catFormGroup"
+    [groupErrors]="['nameAndColorAreRequired']">
+    <input [formControl]="catFormGroup.controls.name"></app-form-field>
+
+  <app-form-field
+    label="Color"
+    [control]="catFormGroup.controls.color"
+    [group]="catFormGroup">
+    <input [formControl]="catFormGroup.controls.color"></app-form-field>
+
 </ng-container>
 

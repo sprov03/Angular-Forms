@@ -1,8 +1,19 @@
-<!--<div style="color: red;" *ngFor="let error of formControl?.errors | errors">-->
-  <!--<ng-container [ngSwitch]="errors.type">-->
-    <!--<ng-container *ngSwitchCase="minlength">{{label}} should be at least {{error?.message?.requiredLength}}</ng-container>-->
-    <!--<ng-container *ngSwitchCase="maxlength">{{label}} should not be longer then {{error?.message?.requiredLength}}</ng-container>-->
-  <!--</ng-container>-->
-  <!--{{error.message}}-->
-<!--</div>-->
+<ng-container *ngIf="control.dirty && control.touched">
+  <div style="color: red;" *ngFor="let error of control?.errors | errors">
+    <ng-container [ngSwitch]="error.type">
+      <div *ngSwitchCase="'minlength'">{{label}} should be at least {{error.message.requiredLength}}</div>
+      <div *ngSwitchCase="'maxlength'">{{label}} should not be longer then {{error.message.requiredLength}}</div>
+      <div *ngSwitchCase="'required'">{{label}} is required.</div>
+      <div *ngSwitchDefault>{{error.message}}</div>
+    </ng-container>
+  </div>
 
+  <div style="color: red;" *ngFor="let error of group?.errors | errors | filter :groupErrorFilter.bind(this)">
+    <ng-container [ngSwitch]="error.type">
+      <div *ngSwitchCase="'minlength'">{{label}} should be at least {{error.message.requiredLength}}</div>
+      <div *ngSwitchCase="'maxlength'">{{label}} should not be longer then {{error.message.requiredLength}}</div>
+      <div *ngSwitchCase="'required'">{{label}} is required.</div>
+      <div *ngSwitchDefault>{{error.message}}</div>
+    </ng-container>
+  </div>
+</ng-container>

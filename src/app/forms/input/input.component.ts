@@ -7,9 +7,10 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
-  // @Input() formControl: FormControl;
-  @Input() formGroup: FormGroup;
-  @Input() formControlName: string;
+  @Input() group: FormGroup;
+  @Input() groupErrors: string[] = [];
+  @Input() control: FormControl;
+  @Input() label: string;
 
   constructor() { }
 

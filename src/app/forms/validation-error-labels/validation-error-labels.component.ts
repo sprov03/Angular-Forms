@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-validation-error-labels',
@@ -7,12 +7,17 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./validation-error-labels.component.scss']
 })
 export class ValidationErrorLabelsComponent implements OnInit {
-  @Input() formControl: FormControl;
+  @Input() group: FormGroup;
+  @Input() control: FormControl;
   @Input() label: string;
+  @Input() groupErrors: string[] = [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  groupErrorFilter(error: {type: string, message: any}) {
+    return this.groupErrors.includes(error.type);
+  }
 }
