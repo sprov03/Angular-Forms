@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/user';
-import {CreateUserFormGroup, UpdateUserFormGroup, UserService} from '../../services/user.service';
+import {UserFormGroup, UserService} from '../../services/user.service';
 import {TodoFormGroup} from '../../form-groups/todo.form-group';
 
 @Component({
@@ -10,15 +10,16 @@ import {TodoFormGroup} from '../../form-groups/todo.form-group';
 })
 export class UserPageComponent implements OnInit {
   user: User;
-  userFormGroup: CreateUserFormGroup;
-  updateUserFormGroup: UpdateUserFormGroup;
+  userFormGroup: UserFormGroup;
 
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit() {
-    this.userFormGroup = new CreateUserFormGroup();
+    this.userService.getUser('kdkdkd').subscribe(user => {
+      this.userFormGroup = new UserFormGroup(user);
+    });
   }
 
   addTodo() {
@@ -27,8 +28,7 @@ export class UserPageComponent implements OnInit {
 
   createUser() {
     this.userService.createUser(this.userFormGroup).subscribe(user => {
-      console.log('User: ', user);
-      this.userFormGroup = new UpdateUserFormGroup(user);
+      this.userFormGroup = new UserFormGroup(user);
     });
   }
 

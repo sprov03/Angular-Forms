@@ -1,5 +1,5 @@
 <h1>User Page</h1>
-<form [formGroup]="userFormGroup">
+<form [formGroup]="userFormGroup" *ngIf="userFormGroup">
   <app-form-field label="First Name" [control]="userFormGroup.controls.firstName">
     <input [formControl]="userFormGroup.controls.firstName">
   </app-form-field>

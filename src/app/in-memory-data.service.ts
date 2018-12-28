@@ -12,7 +12,28 @@ export class InMemoryDataService implements InMemoryDbService {
           id: 'kdkdkd',
           firstName: 'Shawn',
           lastName: 'Pivonka',
-          todos: []
+          todos: [
+            {
+              label: 'woot',
+              description: 'kdlfjs'
+            },
+            {
+              label: 'woot',
+              description: 'kdlfjs'
+            },
+            {
+              label: 'woot',
+              description: 'kdlfjs'
+            },
+            {
+              label: 'woot',
+              description: 'kdlfjs'
+            },
+            {
+              label: 'woot',
+              description: 'kdlfjs'
+            },
+          ]
         }
       ]
     };

@@ -37,7 +37,9 @@ export class AppFormGroup extends FormGroup {
           return true;
         }
       } else {
-        return this.isInvalidRecursive(control as FormGroup);
+        if (this.isInvalidRecursive(control as FormGroup)) {
+          return true;
+        }
       }
     }
 

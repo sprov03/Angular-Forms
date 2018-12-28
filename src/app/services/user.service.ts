@@ -6,24 +6,23 @@ import {AppFormArray} from '../app.form-array';
 import {TodoFormGroup} from '../form-groups/todo.form-group';
 import {User} from '../models/user';
 
-export class CreateUserFormGroup extends AppFormGroup {
+// Ment to be passed directly into a service
+export class UserFormGroup extends AppFormGroup {
   controls = {
+    id: new FormControl(null, []),
     firstName: new FormControl('', []),
     lastName: new FormControl('', []),
     todos: new AppFormArray<TodoFormGroup>([])
   };
 
-  constructor () {
+  constructor (private user: Partial<User> = {}) {
     super();
     this.setControls(this.controls);
-  }
-}
-
-export class UpdateUserFormGroup extends CreateUserFormGroup {
-  constructor (private user: User) {
-    super();
-    this.setControl('id', new FormControl(user.id));
     this.patchValue({...user});
+
+    user.todos.forEach(todo => {
+      this.controls.todos.controls.push(new TodoFormGroup(todo));
+    });
   }
 }
 
@@ -36,11 +35,15 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  createUser(createUserFromGroup: CreateUserFormGroup) {
+  createUser(createUserFromGroup: UserFormGroup) {
     return this.http.post<User>('api/users', createUserFromGroup.getRawValue());
   }
 
-  updateUser(updateUserFormGroup: UpdateUserFormGroup) {
+  updateUser(updateUserFormGroup: UserFormGroup) {
     return this.http.put<User>('api/users', updateUserFormGroup.getRawValue());
+  }
+
+  getUser(userId: string) {
+    return this.http.get<User>('api/users/' + userId);
   }
 }
