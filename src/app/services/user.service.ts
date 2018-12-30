@@ -5,6 +5,7 @@ import {FormControl} from '@angular/forms';
 import {AppFormArray} from '../app.form-array';
 import {TodoFormGroup} from '../form-groups/todo.form-group';
 import {User} from '../models/user';
+import {map} from 'rxjs/operators';
 
 // Ment to be passed directly into a service
 export class UserFormGroup extends AppFormGroup {
@@ -12,7 +13,7 @@ export class UserFormGroup extends AppFormGroup {
     id: new FormControl(null, []),
     firstName: new FormControl('', []),
     lastName: new FormControl('', []),
-    todos: new AppFormArray<TodoFormGroup>([])
+    todos: new AppFormArray<TodoFormGroup>([]),
   };
 
   constructor (private user: Partial<User> = {}) {
@@ -30,20 +31,22 @@ export class UserFormGroup extends AppFormGroup {
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(
     private http: HttpClient
   ) { }
 
   createUser(createUserFromGroup: UserFormGroup) {
-    return this.http.post<User>('api/users', createUserFromGroup.getRawValue());
+    return this.http.post<User>('api/users', createUserFromGroup.getRawValue())
+      .pipe(map(user => new User(user)));
   }
 
   updateUser(updateUserFormGroup: UserFormGroup) {
-    return this.http.put<User>('api/users', updateUserFormGroup.getRawValue());
+    return this.http.put<User>('api/users', updateUserFormGroup.getRawValue())
+      .pipe(map(user => new User(user)));
   }
 
   getUser(userId: string) {
-    return this.http.get<User>('api/users/' + userId);
+    return this.http.get<User>('api/users/' + userId)
+      .pipe(map(user => new User(user)));
   }
 }

@@ -7,7 +7,19 @@
     <input [formControl]="userFormGroup.controls.lastName">
   </app-form-field>
   <app-todo-form [formGroup]="todoFormGroup" *ngFor="let todoFormGroup of userFormGroup.controls.todos.controls"></app-todo-form>
+  <ng-container *ngIf="userFormGroup.controls['address']" [formGroup]="userFormGroup.controls['address']">
+    <app-form-field label="State" [control]="userFormGroup.controls['address'].controls['state']">
+      <input [formControl]="userFormGroup.controls['address'].controls['state']">
+    </app-form-field>
+    <app-form-field label="Zip" [control]="userFormGroup.controls['address'].controls['zip']">
+      <input [formControl]="userFormGroup.controls['address'].controls['zip']">
+    </app-form-field>
+    <app-form-field label="Street" [control]="userFormGroup.controls['address'].controls['street']">
+      <input [formControl]="userFormGroup.controls['address'].controls['street']">
+    </app-form-field>
+  </ng-container>
   <button (click)="addTodo()">Add Todo</button>
+  <button (click)="addAddress()">Add Address</button>
 </form>
 
 <button (click)="saveUser()">Save</button>

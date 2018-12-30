@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/user';
+import {Address, User} from '../../models/user';
 import {UserFormGroup, UserService} from '../../services/user.service';
 import {TodoFormGroup} from '../../form-groups/todo.form-group';
 
@@ -11,22 +11,30 @@ import {TodoFormGroup} from '../../form-groups/todo.form-group';
 export class UserPageComponent implements OnInit {
   user: User;
   userFormGroup: UserFormGroup;
-  userTesting: User;
 
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit() {
-    this.userService.getUser('kdkdkd').subscribe(user => {
-      this.userFormGroup = new UserFormGroup(user);
-      this.userTesting = new User(user);
-      console.log('User Interface: ', this.userTesting);
+    this.userService.getUser('1').subscribe(user => {
+      // this.userFormGroup = new UserFormGroup(user);
+      this.userFormGroup = user.toFormGroup() as UserFormGroup;
+      this.user = user;
+      console.log('User: ', user.formControlData);
+      console.log('User: ', user.address.formControlData);
+      // console.log('formgrop: ', this.user.toFormGroup());
+      // console.log('formgrop: ', this.user.toFormGroup().getRawValue());
+      // console.log('formgrop: ', this.user.toFormGroup().controls);
     });
   }
 
   addTodo() {
     this.userFormGroup.controls.todos.controls.push(new TodoFormGroup());
+  }
+
+  addAddress() {
+    this.userFormGroup.controls['address'] = new Address().toFormGroup();
   }
 
   createUser() {

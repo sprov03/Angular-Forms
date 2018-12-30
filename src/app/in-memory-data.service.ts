@@ -9,31 +9,41 @@ export class InMemoryDataService implements InMemoryDbService {
     return {
       users: [
         {
-          id: 'kdkdkd',
+          id: '1',
           firstName: 'Shawn',
           lastName: 'Pivonka',
           todos: [
             {
+              userId: '1',
               label: 'woot',
               description: 'kdlfjs'
             },
             {
+              userId: '1',
               label: 'woot',
               description: 'kdlfjs'
             },
             {
+              userId: '1',
               label: 'woot',
               description: 'kdlfjs'
             },
             {
+              userId: '1',
               label: 'woot',
               description: 'kdlfjs'
             },
             {
+              userId: '1',
               label: 'woot',
               description: 'kdlfjs'
             },
-          ]
+          ],
+          address: {
+            street: '9730 Morningfield',
+            zip: '78250',
+            state: 'Texas'
+          }
         }
       ]
     };
@@ -43,3 +53,13 @@ export class InMemoryDataService implements InMemoryDbService {
     return new Date().getUTCMilliseconds().toString();
   }
 }
+
+export const Store = {
+  users: [
+    {
+      id: '1',
+      displayLabel: 'Shawn New Desplay Label'
+    }
+  ]
+};
+
