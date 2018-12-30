@@ -12,6 +12,10 @@ function setHydrator (target, key, hydrator: (model: any) => void) {
 
 export function UserLookup(lookupKey: string) {
   return (target, key) => {
+    if (!target[lookupKey]) {
+      return;
+    }
+
     setHydrator(target, key, (model: any) => {
       model[key] = {
         id: model[lookupKey],
@@ -42,10 +46,16 @@ export function CollectionType (classRef: typeof Model) {
 
 function setFormControlData(target, key, formControlData) {
   if (!target.formControlData) {
-    target.formControlData = {};
+    target.formControlData = {
+      group: {validators: []},
+      controls: {}
+    };
   }
-
-  target.formControlData[key] = formControlData;
+  if (!key) {
+    target.formControlData.group = formControlData;
+  } else {
+    target.formControlData.controls[key] = formControlData;
+  }
 }
 
 export function FormControlData(defaultValue: any, validators: ValidatorFn[]) {

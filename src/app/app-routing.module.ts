@@ -7,7 +7,7 @@ import {UserPageComponent} from './pages/user-page/user-page.component';
 const routes: Routes = [
   {path: 'template-forms', component: TemplateFormPageComponent},
   {path: 'reactive-forms', component: ReactiveFormPageComponent},
-  {path: 'user', component: UserPageComponent},
+  {path: '', component: UserPageComponent},
 ];
 
 @NgModule({

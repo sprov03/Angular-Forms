@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Address, User} from '../../models/user';
+import {Address, Todo, User} from '../../models/user';
 import {UserFormGroup, UserService} from '../../services/user.service';
 import {TodoFormGroup} from '../../form-groups/todo.form-group';
 
@@ -22,19 +22,16 @@ export class UserPageComponent implements OnInit {
       this.userFormGroup = user.toFormGroup() as UserFormGroup;
       this.user = user;
       console.log('User: ', user.formControlData);
-      console.log('User: ', user.address.formControlData);
-      // console.log('formgrop: ', this.user.toFormGroup());
+      // console.log('User: ', user.address.formControlData);
+      console.log('formgrop: ', this.user.toFormGroup());
       // console.log('formgrop: ', this.user.toFormGroup().getRawValue());
       // console.log('formgrop: ', this.user.toFormGroup().controls);
     });
   }
 
   addTodo() {
-    this.userFormGroup.controls.todos.controls.push(new TodoFormGroup());
-  }
-
-  addAddress() {
-    this.userFormGroup.controls['address'] = new Address().toFormGroup();
+    this.userFormGroup.controls.todos.controls.push(new Todo().toFormGroup());
+    // this.userFormGroup.controls.todos.controls.push(new TodoFormGroup());
   }
 
   createUser() {

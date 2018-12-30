@@ -1,14 +1,21 @@
 import {CollectionType, FormArrayData, FormControlData, FormGroupData, ModelType, UserLookup} from '../app.decorator';
 import {AppFormGroup} from '../app.form-group';
-import {AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 export class Model {
   hydrators?: {[key: string]: (model: Model) => any};
   formControlData: {
-    [key: string]: {
+    group: {
       type: string,
       defaultValue: any,
       validators: ValidatorFn[]
+    },
+    controls: {
+      [key: string]: {
+        type: string,
+        defaultValue: any,
+        validators: ValidatorFn[]
+      }
     }
   };
   constructor (model = {}) {
@@ -29,11 +36,11 @@ export class Model {
 
   toFormGroup(): AppFormGroup {
     const formGroup = new AppFormGroup();
+    formGroup.setValidators(this.formControlData.group.validators);
+    formGroup.patchValue({...this});
 
-    formGroup.patchValue({...this}); // tslint:disable-line
-
-    for (const key in this.formControlData) {
-      const data = this.formControlData[key];
+    for (const key in this.formControlData.controls) {
+      const data = this.formControlData.controls[key];
       if (data.type === 'FormControl') {
         formGroup.setControl(key, new FormControl(data.defaultValue, data.validators));
       }
@@ -104,6 +111,9 @@ export class Address extends Model {
   state: string;
 }
 
+@FormGroupData([
+  Validators.required
+])
 export class User extends Model {
   @FormControlData(null, [])
   id: string;
