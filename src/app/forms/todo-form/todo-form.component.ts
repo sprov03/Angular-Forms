@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TodoFormGroup} from '../../form-groups/todo.form-group';
+import {TodoFormGroup} from '../../services/user.service';
 
 @Component({
   selector: 'app-todo-form',

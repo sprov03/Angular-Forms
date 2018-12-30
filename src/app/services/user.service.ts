@@ -3,8 +3,7 @@ import {AppFormGroup} from '../app.form-group';
 import {HttpClient} from '@angular/common/http';
 import {FormControl} from '@angular/forms';
 import {AppFormArray} from '../app.form-array';
-import {TodoFormGroup} from '../form-groups/todo.form-group';
-import {User} from '../models/user';
+import {Address, Todo, User} from '../models/user';
 import {map} from 'rxjs/operators';
 
 // Ment to be passed directly into a service
@@ -14,6 +13,7 @@ export class UserFormGroup extends AppFormGroup {
     firstName: new FormControl('', []),
     lastName: new FormControl('', []),
     todos: new AppFormArray<TodoFormGroup>([]),
+    address: new Address().toFormGroup() as AddressFormGroup
   };
 
   constructor (private user: Partial<User> = {}) {
@@ -22,9 +22,24 @@ export class UserFormGroup extends AppFormGroup {
     this.patchValue({...user});
 
     user.todos.forEach(todo => {
-      this.controls.todos.controls.push(new TodoFormGroup(todo));
+      this.controls.todos.controls.push(new Todo(todo).toFormGroup() as TodoFormGroup);
     });
   }
+}
+
+export interface TodoFormGroup extends AppFormGroup {
+  controls: {
+    label: FormControl;
+    description: FormControl;
+  };
+}
+
+export interface AddressFormGroup extends AppFormGroup {
+  controls: {
+    zip: FormControl;
+    state: FormControl;
+    street: FormControl;
+  };
 }
 
 @Injectable({

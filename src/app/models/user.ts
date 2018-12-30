@@ -37,7 +37,6 @@ export class Model {
   toFormGroup(): AppFormGroup {
     const formGroup = new AppFormGroup();
     formGroup.setValidators(this.formControlData.group.validators);
-    formGroup.patchValue({...this});
 
     for (const key in this.formControlData.controls) {
       const data = this.formControlData.controls[key];
@@ -111,9 +110,6 @@ export class Address extends Model {
   state: string;
 }
 
-@FormGroupData([
-  Validators.required
-])
 export class User extends Model {
   @FormControlData(null, [])
   id: string;
@@ -132,11 +128,9 @@ export class User extends Model {
   ])
   lastName: string;
 
-  @FormArrayData([Validators.required])
-  @CollectionType(Todo)
+  @CollectionType(Todo, [Validators.required])
   todos: Todo[];
 
-  @FormGroupData([Validators.required])
-  @ModelType(Address)
+  @ModelType(Address, [Validators.required])
   address: Address;
 }

@@ -26,18 +26,29 @@ export function UserLookup(lookupKey: string) {
 }
 
 
-export function ModelType (classRef: typeof Model) {
+export function ModelType (classRef: typeof Model, validators: ValidatorFn[] = []) {
   return (target, key) => {
     setHydrator(target, key, (model: any) => {
       model[key] = new classRef(model[key]);
     });
+
+    setFormControlData(target, key, {
+      type: 'FormGroup',
+      defaultValue: null,
+      validators: validators
+    });
   };
 }
 
-export function CollectionType (classRef: typeof Model) {
+export function CollectionType (classRef: typeof Model, validators: ValidatorFn[] = []) {
   return (target, key) => {
     setHydrator(target, key, (model: any) => {
       model[key] = model[key].map(data => {
+        setFormControlData(target, key, {
+          type: 'FormGroup',
+          defaultValue: null,
+          validators: validators
+        });
         return new classRef(data);
       });
     });
@@ -69,7 +80,7 @@ export function FormControlData(defaultValue: any, validators: ValidatorFn[]) {
 }
 
 export function FormGroupData(validators: ValidatorFn[]) {
-  return (target, key) => {
+  return (target: string, key: string) => {
     setFormControlData(target, key, {
       type: 'FormGroup',
       defaultValue: null,

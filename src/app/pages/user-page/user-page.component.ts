@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Address, Todo, User} from '../../models/user';
-import {UserFormGroup, UserService} from '../../services/user.service';
-import {TodoFormGroup} from '../../form-groups/todo.form-group';
+import {Todo, User} from '../../models/user';
+import {TodoFormGroup, UserFormGroup, UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-user-page',
@@ -30,7 +29,7 @@ export class UserPageComponent implements OnInit {
   }
 
   addTodo() {
-    this.userFormGroup.controls.todos.controls.push(new Todo().toFormGroup());
+    this.userFormGroup.controls.todos.controls.push(new Todo().toFormGroup() as TodoFormGroup);
     // this.userFormGroup.controls.todos.controls.push(new TodoFormGroup());
   }
 
