@@ -42,13 +42,18 @@ export function ModelType (classRef: typeof Model, validators: ValidatorFn[] = [
 
 export function CollectionType (classRef: typeof Model, validators: ValidatorFn[] = []) {
   return (target, key) => {
+    setFormControlData(target, key, {
+      type: 'FormArray',
+      defaultValue: null,
+      validators: validators
+    });
+
     setHydrator(target, key, (model: any) => {
+      if (!model[key]) {
+        return;
+      }
       model[key] = model[key].map(data => {
-        setFormControlData(target, key, {
-          type: 'FormArray',
-          defaultValue: null,
-          validators: validators
-        });
+        console.log('Data: ', data);
         return new classRef(data);
       });
     });

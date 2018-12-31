@@ -17,20 +17,15 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUser('1').subscribe(user => {
-      // this.userFormGroup = new UserFormGroup(user);
       this.userFormGroup = user.toFormGroup() as UserFormGroup;
       this.user = user;
       console.log('User: ', user.formControlData);
-      // console.log('User: ', user.address.formControlData);
-      console.log('formgrop: ', this.user.toFormGroup());
-      // console.log('formgrop: ', this.user.toFormGroup().getRawValue());
-      // console.log('formgrop: ', this.user.toFormGroup().controls);
+      console.log('formgrop: ', this.user.toFormGroup().getRawValue());
     });
   }
 
   addTodo() {
     this.userFormGroup.controls.todos.controls.push(new Todo().toFormGroup() as TodoFormGroup);
-    // this.userFormGroup.controls.todos.controls.push(new TodoFormGroup());
   }
 
   createUser() {

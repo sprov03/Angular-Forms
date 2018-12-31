@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     return {
+      properties: [],
       users: [
         {
           id: '1',

@@ -1,4 +1,5 @@
-<h1>User Page</h1>
+<h1>User Page With Document Form Types</h1>
+
 <form [formGroup]="userFormGroup" *ngIf="userFormGroup">
   <app-form-field label="First Name" [control]="userFormGroup.controls.firstName">
     <input [formControl]="userFormGroup.controls.firstName">
@@ -7,6 +8,7 @@
     <input [formControl]="userFormGroup.controls.lastName">
   </app-form-field>
   <app-todo-form [formGroup]="todoFormGroup" *ngFor="let todoFormGroup of userFormGroup.controls.todos.controls"></app-todo-form>
+
   <ng-container *ngIf="userFormGroup.controls['address']" [formGroup]="userFormGroup.controls['address']">
     <app-form-field label="State" [control]="userFormGroup.controls['address'].controls['state']">
       <input [formControl]="userFormGroup.controls['address'].controls['state']">
@@ -19,7 +21,6 @@
     </app-form-field>
   </ng-container>
   <button (click)="addTodo()">Add Todo</button>
-  <button (click)="addAddress()">Add Address</button>
 </form>
 
 <button (click)="saveUser()">Save</button>

@@ -36,6 +36,9 @@ export class Model {
 
   toFormGroup(): AppFormGroup {
     const formGroup = new AppFormGroup();
+    if (!this.formControlData) {
+      return formGroup;
+    }
     formGroup.setValidators(this.formControlData.group.validators);
 
     console.log('Cotrols: ', this.formControlData.controls);
@@ -53,9 +56,11 @@ export class Model {
       }
       if (data.type === 'FormArray') {
         const formArray = new FormArray([], data.validators);
-        this[key].forEach(model => {
-          formArray.controls.push(model.toFormGroup());
-        });
+        if (this[key]) {
+          this[key].forEach(model => {
+            formArray.controls.push(model.toFormGroup());
+          });
+        }
         formGroup.setControl(key, formArray);
       }
     }

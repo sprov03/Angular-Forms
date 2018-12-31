@@ -1,0 +1,38 @@
+<h2>Property Without Interfaces</h2>
+
+<form [formGroup]="propertyFormGroup">
+  <app-form-field label="UpdatedBy" [control]="propertyFormGroup.controls['updatedById']">
+    <select [formControl]="propertyFormGroup.controls['updatedById']">
+      <option [ngValue]="null">Select User</option>
+      <option *ngFor="let user of store.users" [ngValue]="user.id">{{user.displayLabel}}</option>
+    </select>
+  </app-form-field>
+
+  <ng-container [formGroup]="propertyFormGroup.controls['address']">
+    <app-form-field label="Zip" [control]="propertyFormGroup.controls['address'].controls['zip']">
+      <input [formControl]="propertyFormGroup.controls['address'].controls['zip']">
+    </app-form-field>
+    <app-form-field label="State" [control]="propertyFormGroup.controls['address'].controls['state']">
+      <input [formControl]="propertyFormGroup.controls['address'].controls['state']">
+    </app-form-field>
+    <app-form-field label="City" [control]="propertyFormGroup.controls['address'].controls['street']">
+      <input [formControl]="propertyFormGroup.controls['address'].controls['street']">
+    </app-form-field>
+  </ng-container>
+
+  <ng-container [formGroup]="contactFormGroup" *ngFor="let contactFormGroup of propertyFormGroup.controls['contacts'].controls">
+    <app-form-field label="firstName" [control]="contactFormGroup.controls['firstName']">
+      <input [formControl]="contactFormGroup.controls['firstName']">
+    </app-form-field>
+    <app-form-field label="lastName" [control]="contactFormGroup.controls['lastName']">
+      <input [formControl]="contactFormGroup.controls['lastName']">
+    </app-form-field>
+    <app-form-field label="displayLabel" [control]="contactFormGroup.controls['displayLabel']">
+      <input [formControl]="contactFormGroup.controls['displayLabel']">
+    </app-form-field>
+  </ng-container>
+
+  <button (click)="addContact()">Add Contact</button>
+  <button (click)="propertyFormGroup.showErrors()">Show Errots</button>
+
+</form>

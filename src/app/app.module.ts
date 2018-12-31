@@ -17,6 +17,7 @@ import { TodoFormComponent } from './forms/todo-form/todo-form.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import {HttpClientModule} from '@angular/common/http';
+import { PropertyWithoutInterfacesComponent } from './pages/property-without-interfaces/property-without-interfaces.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {HttpClientModule} from '@angular/common/http';
     FilterPipe,
     UserPageComponent,
     TodoFormComponent,
+    PropertyWithoutInterfacesComponent,
   ],
   imports: [
     BrowserModule,
