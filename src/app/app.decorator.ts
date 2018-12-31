@@ -45,7 +45,7 @@ export function CollectionType (classRef: typeof Model, validators: ValidatorFn[
     setHydrator(target, key, (model: any) => {
       model[key] = model[key].map(data => {
         setFormControlData(target, key, {
-          type: 'FormGroup',
+          type: 'FormArray',
           defaultValue: null,
           validators: validators
         });

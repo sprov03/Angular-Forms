@@ -38,8 +38,11 @@ export class Model {
     const formGroup = new AppFormGroup();
     formGroup.setValidators(this.formControlData.group.validators);
 
+    console.log('Cotrols: ', this.formControlData.controls);
     for (const key in this.formControlData.controls) {
+      console.log('Key: ', key);
       const data = this.formControlData.controls[key];
+      console.log('Data: ', data);
       if (data.type === 'FormControl') {
         formGroup.setControl(key, new FormControl(data.defaultValue, data.validators));
       }

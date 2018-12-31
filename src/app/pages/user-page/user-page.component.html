@@ -12,7 +12,7 @@
       <input [formControl]="userFormGroup.controls['address'].controls['state']">
     </app-form-field>
     <app-form-field label="Zip" [control]="userFormGroup.controls['address'].controls['zip']">
-      <input [formControl]="userFormGroup.controls['address'].controls['zip']">
+      <input [formControl]="userFormGroup.controls.address.controls.zip">
     </app-form-field>
     <app-form-field label="Street" [control]="userFormGroup.controls['address'].controls['street']">
       <input [formControl]="userFormGroup.controls['address'].controls['street']">
