@@ -18,6 +18,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import {HttpClientModule} from '@angular/common/http';
 import { PropertyWithoutInterfacesComponent } from './pages/property-without-interfaces/property-without-interfaces.component';
+import { PropertyWithInterfacesComponent } from './pages/property-with-interfaces/property-with-interfaces.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PropertyWithoutInterfacesComponent } from './pages/property-without-int
     UserPageComponent,
     TodoFormComponent,
     PropertyWithoutInterfacesComponent,
+    PropertyWithInterfacesComponent,
   ],
   imports: [
     BrowserModule,

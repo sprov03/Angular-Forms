@@ -57,10 +57,10 @@ export class InMemoryDataService implements InMemoryDbService {
 
 export const Store = {
   users: [
-    {
-      id: '1',
-      displayLabel: 'Shawn New Desplay Label'
-    }
+    {id: '1', displayLabel: 'Shawn Pivonka'},
+    {id: '2', displayLabel: 'Jessica Pivonka'},
+    {id: '3', displayLabel: 'Aria Pivonka'},
+    {id: '4', displayLabel: 'Rowan Pivonka'},
   ]
 };
 

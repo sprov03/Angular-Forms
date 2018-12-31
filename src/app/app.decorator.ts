@@ -12,15 +12,14 @@ function setHydrator (target, key, hydrator: (model: any) => void) {
 
 export function UserLookup(lookupKey: string) {
   return (target, key) => {
-    if (!target[lookupKey]) {
-      return;
-    }
-
     setHydrator(target, key, (model: any) => {
-      model[key] = {
-        id: model[lookupKey],
-        displayLabel: Store.users.find(user => user.id === model[lookupKey]).displayLabel
-      };
+      const user = Store.users.find(u => u.id === model[lookupKey]);
+      if (user) {
+        model[key] = {
+          id: model[lookupKey],
+          displayLabel: user.displayLabel
+        };
+      }
     });
   };
 }
@@ -53,7 +52,6 @@ export function CollectionType (classRef: typeof Model, validators: ValidatorFn[
         return;
       }
       model[key] = model[key].map(data => {
-        console.log('Data: ', data);
         return new classRef(data);
       });
     });

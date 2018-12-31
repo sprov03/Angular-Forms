@@ -1,6 +1,7 @@
 <h2>Property Without Interfaces</h2>
 
 <form [formGroup]="propertyFormGroup">
+  <h3>Update By</h3>
   <app-form-field label="UpdatedBy" [control]="propertyFormGroup.controls['updatedById']">
     <select [formControl]="propertyFormGroup.controls['updatedById']">
       <option [ngValue]="null">Select User</option>
@@ -8,6 +9,7 @@
     </select>
   </app-form-field>
 
+  <h3>Address</h3>
   <ng-container [formGroup]="propertyFormGroup.controls['address']">
     <app-form-field label="Zip" [control]="propertyFormGroup.controls['address'].controls['zip']">
       <input [formControl]="propertyFormGroup.controls['address'].controls['zip']">
@@ -20,6 +22,7 @@
     </app-form-field>
   </ng-container>
 
+  <h3>Contacts</h3>
   <ng-container [formGroup]="contactFormGroup" *ngFor="let contactFormGroup of propertyFormGroup.controls['contacts'].controls">
     <app-form-field label="firstName" [control]="contactFormGroup.controls['firstName']">
       <input [formControl]="contactFormGroup.controls['firstName']">
@@ -33,6 +36,10 @@
   </ng-container>
 
   <button (click)="addContact()">Add Contact</button>
-  <button (click)="propertyFormGroup.showErrors()">Show Errots</button>
+  <button (click)="propertyFormGroup.showErrors()">Show Errors</button>
+  <button (click)="saveProperty()">Save Property</button>
+
+  <h3>Property Json, Save to create the property</h3>
+  <pre>{{property | json}}</pre>
 
 </form>

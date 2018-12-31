@@ -15,6 +15,5 @@ export class TodoFormComponent implements OnInit {
   }
 
   saveTodo() {
-    console.log('Form Data: ', this.formGroup.getRawValue());
   }
 }

@@ -58,9 +58,10 @@ export class Property extends Model {
   @ModelType(Address)
   address: Address;
 
+  // @CollectionType(Appointment)
   // appointments: Appointment[];
 
-  @FormControlData('', [
+  @FormControlData('1', [
     Validators.required,
     Validators.minLength(3),
     Validators.maxLength(20)
@@ -70,7 +71,7 @@ export class Property extends Model {
   @UserLookup('createdById')
   createdBy: LookupInfo;
 
-  @FormControlData('', [
+  @FormControlData('1', [
     Validators.required,
     Validators.minLength(3),
     Validators.maxLength(20)
@@ -80,7 +81,7 @@ export class Property extends Model {
   @UserLookup('updatedById')
   updatedBy: LookupInfo;
 
-  @FormControlData('', [
+  @FormControlData('1', [
     Validators.required,
     Validators.minLength(3),
     Validators.maxLength(20)
