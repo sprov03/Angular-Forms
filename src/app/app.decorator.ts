@@ -1,13 +1,20 @@
 import {Model} from './models/user';
 import {Store} from './in-memory-data.service';
 import {ValidatorFn} from '@angular/forms';
+import * as moment from 'moment';
 
 function setHydrator (target, key, hydrator: (model: any) => void) {
   if (!target.hydrators) {
-    target.hydrators = {};
+    target.hydrators = [];
   }
 
-  target.hydrators[key] = hydrator;
+  target.hydrators.push(hydrator);
+}
+
+export function Hydrator(hydrator: (model: Model) => void) {
+  return (target, key) => {
+    setHydrator(target, key, hydrator);
+  };
 }
 
 export function UserLookup(lookupKey: string) {
@@ -24,6 +31,22 @@ export function UserLookup(lookupKey: string) {
   };
 }
 
+export function DateType() {
+  return (target, key) => {
+    setHydrator(target, key, (model: any) => {
+      const serverValue = model[key];
+      if (serverValue) {
+        model[key] = moment(serverValue);
+      }
+    });
+
+    setFormControlData(target, key, {
+      dataMap: (date: moment.Moment) => {
+        return date.format(moment.HTML5_FMT.DATETIME_LOCAL);
+      }
+    });
+  };
+}
 
 export function ModelType (classRef: typeof Model, validators: ValidatorFn[] = []) {
   return (target, key) => {
@@ -67,17 +90,25 @@ function setFormControlData(target, key, formControlData) {
   }
   if (!key) {
     target.formControlData.group = formControlData;
+  } else if (target.formControlData.controls[key]) {
+    target.formControlData.controls[key].type = formControlData.type;
+    target.formControlData.controls[key].defaultValue = formControlData.defaultValue;
+    target.formControlData.controls[key].validators = formControlData.validators;
+    if (formControlData.dataMap) {
+      target.formControlData.controls[key].dataMap = formControlData.dataMap;
+    }
   } else {
     target.formControlData.controls[key] = formControlData;
   }
 }
 
-export function FormControlData(defaultValue: any, validators: ValidatorFn[]) {
+export function FormControlData(defaultValue: any, validators: ValidatorFn[], dataMap?: (value: any) => any) {
   return (target, key) => {
     setFormControlData(target, key, {
       type: 'FormControl',
       defaultValue: defaultValue,
-      validators: validators
+      validators: validators,
+      dataMap: dataMap
     });
   };
 }

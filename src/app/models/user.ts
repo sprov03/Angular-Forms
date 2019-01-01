@@ -3,18 +3,21 @@ import {AppFormGroup} from '../app.form-group';
 import {FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 export class Model {
-  hydrators?: {[key: string]: (model: Model) => any};
+  // hydrators?: {[key: string]: (model: Model) => any};
+  hydrators: ((model: Model) => any)[];
   formControlData: {
     group: {
       type: string,
       defaultValue: any,
-      validators: ValidatorFn[]
+      validators: ValidatorFn[],
+      dataMap: (value: any) => any
     },
     controls: {
       [key: string]: {
         type: string,
         defaultValue: any,
-        validators: ValidatorFn[]
+        validators: ValidatorFn[],
+        dataMap: (value: any) => any
       }
     }
   };
@@ -26,11 +29,9 @@ export class Model {
     }
 
     if (this.hydrators) {
-      for (const key in this.hydrators) {
-        if (this.hydrators.hasOwnProperty(key)) {
-          this.hydrators[key](this);
-        }
-      }
+      this.hydrators.forEach(hydrator => {
+        hydrator(this);
+      });
     }
   }
 
@@ -44,6 +45,15 @@ export class Model {
     for (const key in this.formControlData.controls) {
       const data = this.formControlData.controls[key];
       if (data.type === 'FormControl') {
+        // Overwrite default value
+        if (this[key] !== null && this[key] !== undefined) {
+          if (data.dataMap) {
+            data.defaultValue = data.dataMap(this[key]);
+          } else {
+            data.defaultValue = this[key];
+          }
+        }
+
         formGroup.setControl(key, new FormControl(data.defaultValue, data.validators));
       }
       if (data.type === 'FormGroup') {

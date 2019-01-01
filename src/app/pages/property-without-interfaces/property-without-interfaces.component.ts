@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormGroup} from '@angular/forms';
-import {Contact, Property, PropertyFormGroup} from '../../models/propertie';
+import {FormArray} from '@angular/forms';
+import {Appointment, Contact, Property} from '../../models/propertie';
 import {Store} from '../../in-memory-data.service';
 import {AppFormGroup} from '../../app.form-group';
 import {PropertyService} from '../../services/property.service';
@@ -20,8 +20,14 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.propertyFormGroup = new Property().toFormGroup();
+    this.property = new Property({
+      deletedById: '1'
+    });
+    this.propertyFormGroup = this.property.toFormGroup();
+    this.addAppointment();
+    this.addContact();
     this.saveProperty();
+    // console.log('Property From Groups: ', this.propertyFormGroup.getRawValue().appointments);
   }
 
   addContact() {
@@ -32,6 +38,12 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
   saveProperty() {
     this._propertyService.createProperty(this.propertyFormGroup).subscribe(property => {
       this.property = property;
+      this.propertyFormGroup = property.toFormGroup();
     });
+  }
+
+  addAppointment() {
+    const appointments = this.propertyFormGroup.controls['appointments'] as FormArray;
+    appointments.controls.push(new Appointment().toFormGroup());
   }
 }
