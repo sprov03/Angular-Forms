@@ -21,11 +21,7 @@ export class PropertyService {
 
   createProperty(propertyFormGroup: FormGroup): Observable<Property> {
     propertyFormGroup.removeControl('id');
-    console.log('Response: ', propertyFormGroup.getRawValue());
     return this._http.post('api/properties', propertyFormGroup.getRawValue())
-      .pipe(map(response => {
-        console.log('Response: ', response);
-        return new Property(response as Partial<Property>);
-      }));
+      .pipe(map(response => new Property(response as Partial<Property>)));
   }
 }

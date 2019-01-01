@@ -25,12 +25,9 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
       createdById: '1',
       updatedById: '1'
     });
-    console.log('Proeprty: ', this.property);
     this.propertyFormGroup = this.property.toFormGroup();
-    console.log('Proeprty: ', this.propertyFormGroup.getRawValue());
     this.addAppointment();
     this.addContact();
-    console.log('Property From Groups: ', this.propertyFormGroup.getRawValue());
     this.saveProperty();
   }
 
@@ -40,7 +37,6 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
   }
 
   saveProperty() {
-    console.log('Proeprty Form Group: ', this.propertyFormGroup.getRawValue());
     this._propertyService.createProperty(this.propertyFormGroup).subscribe(property => {
       this.property = property;
       this.propertyFormGroup = property.toFormGroup();

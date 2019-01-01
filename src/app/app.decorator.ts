@@ -91,12 +91,10 @@ function setFormControlData(target, key, formControlData) {
   if (!key) {
     target.formControlData.group = formControlData;
   } else if (target.formControlData.controls[key]) {
-    target.formControlData.controls[key].type = formControlData.type;
-    target.formControlData.controls[key].defaultValue = formControlData.defaultValue;
-    target.formControlData.controls[key].validators = formControlData.validators;
-    if (formControlData.dataMap) {
-      target.formControlData.controls[key].dataMap = formControlData.dataMap;
-    }
+    target.formControlData.controls[key] = {
+      ...target.formControlData.controls[key],
+      ...formControlData
+    };
   } else {
     target.formControlData.controls[key] = formControlData;
   }
