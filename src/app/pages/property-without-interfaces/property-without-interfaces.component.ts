@@ -28,7 +28,7 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
     this.propertyFormGroup = this.property.toFormGroup();
     this.addAppointment();
     this.addContact();
-    this.saveProperty();
+    console.log('From Group: ', this.propertyFormGroup.getRawValue().appointments[0]);
   }
 
   addContact() {

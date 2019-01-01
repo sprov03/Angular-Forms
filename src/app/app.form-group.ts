@@ -3,8 +3,13 @@ import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms
 
 @Injectable({providedIn: 'root'})
 export class AppFormGroup extends FormGroup {
+  demappers: ((rawValue: any) => any)[] = [];
   constructor() {
     super({});
+  }
+
+  setDemapper(demapper: (rawValue: any) => any) {
+   this.demappers.push(demapper);
   }
 
   setControls(controls: {[key: string]: AbstractControl | any}) {
@@ -44,5 +49,16 @@ export class AppFormGroup extends FormGroup {
     }
 
     return false;
+  }
+
+  getRawValue() {
+    let rawValue = super.getRawValue();
+    if (this.demappers) {
+      this.demappers.forEach(demapper => {
+        rawValue = demapper(rawValue);
+      });
+    }
+
+    return rawValue;
   }
 }

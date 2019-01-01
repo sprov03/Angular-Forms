@@ -30,11 +30,7 @@ export class Contact extends Model {
 }
 
 export class Appointment extends Model {
-  @FormControlData(null, [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(20)
-  ])
+  @FormControlData(null, [Validators.required])
   id: string;
 
   // This will map the server time to the users local time
@@ -78,18 +74,17 @@ export class Property extends Model {
   @CollectionType(Appointment)
   appointments: Appointment[];
 
-  @FormControlData(null, [])
   createdById: string;
   @UserLookup('createdById')
   createdBy: LookupInfo;
 
+  // This is here just for a an exampe of a dropdown seteup
   @FormControlData(null, [])
   updatedById: string;
   // UserLookup Hydrator
   @UserLookup('updatedById')
   updatedBy: LookupInfo;
 
-  @FormControlData(null, [])
   deletedById: string;
   // @UserLookup('deletedById')
   // Replaced this one with an example of a custom mapping in the constructor

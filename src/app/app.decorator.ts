@@ -43,7 +43,13 @@ export function DateType() {
     setFormControlData(target, key, {
       dataMap: (date: moment.Moment) => {
         return date.format(moment.HTML5_FMT.DATETIME_LOCAL);
-      }
+      },
+      demapper: (rawValue: any) => {
+          if (rawValue[key]) {
+            rawValue[key] = moment(rawValue[key]).add(6, 'hours').toISOString();
+          }
+          return rawValue;
+        }
     });
   };
 }
@@ -67,7 +73,7 @@ export function CollectionType (classRef: typeof Model, validators: ValidatorFn[
     setFormControlData(target, key, {
       type: 'FormArray',
       defaultValue: null,
-      validators: validators
+      validators: validators,
     });
 
     setHydrator(target, (model: any) => {

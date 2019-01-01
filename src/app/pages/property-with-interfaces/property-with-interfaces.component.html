@@ -1,3 +1,59 @@
-<p>
-  property-with-interfaces works!
-</p>
+<h2>Property Without Interfaces</h2>
+<h3>This html is writen with Form Group Interfaces Defined</h3>
+<h4>I thing this is possibly not necessary.</h4>
+
+<form [formGroup]="propertyFormGroup">
+  <app-form-field label="UpdatedBy" [group]="propertyFormGroup" [control]="propertyFormGroup.controls.updatedById" [groupErrors]="[]">
+    <select [formControl]="propertyFormGroup.controls.updatedById">
+      <option [ngValue]="null">Select User</option>
+      <option *ngFor="let user of store.users" [ngValue]="user.id">{{user.displayLabel}}</option>
+    </select>
+  </app-form-field>
+
+  <h3>Address</h3>
+  <ng-container [formGroup]="propertyFormGroup.controls.address">
+    <app-form-field label="Zip" [control]="propertyFormGroup.controls.address.controls.zip">
+      <input [formControl]="propertyFormGroup.controls.address.controls.zip">
+    </app-form-field>
+    <app-form-field label="State" [control]="propertyFormGroup.controls.address.controls.state">
+      <input [formControl]="propertyFormGroup.controls.address.controls.state">
+    </app-form-field>
+    <app-form-field label="City" [control]="propertyFormGroup.controls.address.controls.street">
+      <input [formControl]="propertyFormGroup.controls.address.controls.street">
+    </app-form-field>
+  </ng-container>
+
+  <h3>Contacts</h3>
+  <ng-container [formGroup]="contactFormGroup" *ngFor="let contactFormGroup of propertyFormGroup.controls.contacts.controls">
+    <app-form-field label="firstName" [control]="contactFormGroup.controls.firstName">
+      <input [formControl]="contactFormGroup.controls.firstName">
+    </app-form-field>
+    <app-form-field label="lastName" [control]="contactFormGroup.controls.lastName">
+      <input [formControl]="contactFormGroup.controls.lastName">
+    </app-form-field>
+    <app-form-field label="displayLabel" [control]="contactFormGroup.controls.displayLabel">
+      <input [formControl]="contactFormGroup.controls.displayLabel">
+    </app-form-field>
+  </ng-container>
+
+  <button (click)="addContact()">Add Contact</button>
+
+  <h3>Appointments</h3>
+  <ng-container [formGroup]="appointmentFormGroup" *ngFor="let appointmentFormGroup of propertyFormGroup.controls.appointments.controls">
+    <app-form-field label="startTime" [control]="appointmentFormGroup.controls.startTime">
+      <input type="datetime-local" [formControl]="appointmentFormGroup.controls.startTime">
+    </app-form-field>
+    <app-form-field label="endTime" [control]="appointmentFormGroup.controls.endTime">
+      <input type="datetime-local" [formControl]="appointmentFormGroup.controls.endTime">
+    </app-form-field>
+  </ng-container>
+  <button (click)="addAppointment()">Add Appointment</button>
+
+  <h3>Property Json, Save to create the property</h3>
+  <h4>Note: When you save the property the created by data gets lost, (an issue with not having a database and this is just a simple example)</h4>
+  <button (click)="propertyFormGroup.showErrors()">Show Errors</button>
+  <button (click)="saveProperty()">Save Property</button>
+
+  <pre>{{property | json}}</pre>
+
+</form>

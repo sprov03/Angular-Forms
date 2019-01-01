@@ -10,17 +10,20 @@ export class Model {
       type: string,
       defaultValue: any,
       validators: ValidatorFn[],
-      dataMap: (value: any) => any
+      dataMap: (value: any) => any,
+      demapper: (rawValue: any) => any
     },
     controls: {
       [key: string]: {
         type: string,
         defaultValue: any,
         validators: ValidatorFn[],
-        dataMap: (value: any) => any
+        dataMap: (value: any) => any,
+        demapper: ((rawValue: any) => any)
       }
     }
   };
+
   constructor (model = {}) {
     for (const key in model) {
       if (model.hasOwnProperty(key)) {
@@ -53,19 +56,29 @@ export class Model {
             data.defaultValue = this[key];
           }
         }
+        if (data.demapper) {
+          formGroup.setDemapper(data.demapper);
+        }
 
         formGroup.setControl(key, new FormControl(data.defaultValue, data.validators));
       }
       if (data.type === 'FormGroup') {
         const subFormGroup = this[key].toFormGroup();
         subFormGroup.setValidators(data.validators);
+        if (data.demapper) {
+          subFormGroup.setDemapper(data.demapper);
+        }
         formGroup.setControl(key, subFormGroup);
       }
       if (data.type === 'FormArray') {
         const formArray = new FormArray([], data.validators);
         if (this[key]) {
           this[key].forEach(model => {
-            formArray.controls.push(model.toFormGroup());
+            const subFormGroup = model.toFormGroup();
+            if (data.demapper) {
+              subFormGroup.setDemapper(data.demapper);
+            }
+            formArray.controls.push(subFormGroup);
           });
         }
         formGroup.setControl(key, formArray);
