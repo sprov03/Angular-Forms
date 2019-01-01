@@ -3,7 +3,7 @@ import {Store} from './in-memory-data.service';
 import {ValidatorFn} from '@angular/forms';
 import * as moment from 'moment';
 
-function setHydrator (target, key, hydrator: (model: any) => void) {
+function setHydrator (target, hydrator: (model: any) => void) {
   if (!target.hydrators) {
     target.hydrators = [];
   }
@@ -12,14 +12,14 @@ function setHydrator (target, key, hydrator: (model: any) => void) {
 }
 
 export function Hydrator(hydrator: (model: Model) => void) {
-  return (target, key) => {
-    setHydrator(target, key, hydrator);
+  return (target) => {
+    setHydrator(target, hydrator);
   };
 }
 
 export function UserLookup(lookupKey: string) {
   return (target, key) => {
-    setHydrator(target, key, (model: any) => {
+    setHydrator(target, (model: any) => {
       const user = Store.users.find(u => u.id === model[lookupKey]);
       if (user) {
         model[key] = {
@@ -33,7 +33,7 @@ export function UserLookup(lookupKey: string) {
 
 export function DateType() {
   return (target, key) => {
-    setHydrator(target, key, (model: any) => {
+    setHydrator(target, (model: any) => {
       const serverValue = model[key];
       if (serverValue) {
         model[key] = moment(serverValue);
@@ -50,7 +50,7 @@ export function DateType() {
 
 export function ModelType (classRef: typeof Model, validators: ValidatorFn[] = []) {
   return (target, key) => {
-    setHydrator(target, key, (model: any) => {
+    setHydrator(target, (model: any) => {
       model[key] = new classRef(model[key]);
     });
 
@@ -70,7 +70,7 @@ export function CollectionType (classRef: typeof Model, validators: ValidatorFn[
       validators: validators
     });
 
-    setHydrator(target, key, (model: any) => {
+    setHydrator(target, (model: any) => {
       if (!model[key]) {
         return;
       }

@@ -1,7 +1,6 @@
 <h2>Property Without Interfaces</h2>
 
 <form [formGroup]="propertyFormGroup">
-  <h3>Update By</h3>
   <app-form-field label="UpdatedBy" [control]="propertyFormGroup.controls['updatedById']">
     <select [formControl]="propertyFormGroup.controls['updatedById']">
       <option [ngValue]="null">Select User</option>
@@ -38,15 +37,15 @@
   <button (click)="addContact()">Add Contact</button>
 
   <h3>Appointments</h3>
-  <!--<ng-container [formGroup]="appointmentFormGroup" *ngFor="let appointmentFormGroup of propertyFormGroup.controls['appointments'].controls">-->
+  <ng-container [formGroup]="appointmentFormGroup" *ngFor="let appointmentFormGroup of propertyFormGroup.controls['appointments'].controls">
     <!--<app-form-field label="startTime" [control]="appointmentFormGroup.controls['startTime']">-->
       <!--<input type="datetime-local" [formControl]="appointmentFormGroup.controls['startTime']">-->
     <!--</app-form-field>-->
     <!--<app-form-field label="endTime" [control]="appointmentFormGroup.controls['endTime']">-->
       <!--<input type="datetime-local" [formControl]="appointmentFormGroup.controls['endTime']">-->
     <!--</app-form-field>-->
-  <!--</ng-container>-->
-  <!--<button (click)="addAppointment()">Add Appointment</button>-->
+  </ng-container>
+  <button (click)="addAppointment()">Add Appointment</button>
 
   <h3>Property Json, Save to create the property</h3>
   <button (click)="propertyFormGroup.showErrors()">Show Errors</button>

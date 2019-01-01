@@ -21,13 +21,17 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
 
   ngOnInit() {
     this.property = new Property({
-      deletedById: '1'
+      deletedById: '1',
+      createdById: '1',
+      updatedById: '1'
     });
+    console.log('Proeprty: ', this.property);
     this.propertyFormGroup = this.property.toFormGroup();
+    console.log('Proeprty: ', this.propertyFormGroup.getRawValue());
     this.addAppointment();
     this.addContact();
+    console.log('Property From Groups: ', this.propertyFormGroup.getRawValue());
     this.saveProperty();
-    // console.log('Property From Groups: ', this.propertyFormGroup.getRawValue().appointments);
   }
 
   addContact() {
@@ -36,6 +40,7 @@ export class PropertyWithoutInterfacesComponent implements OnInit {
   }
 
   saveProperty() {
+    console.log('Proeprty Form Group: ', this.propertyFormGroup.getRawValue());
     this._propertyService.createProperty(this.propertyFormGroup).subscribe(property => {
       this.property = property;
       this.propertyFormGroup = property.toFormGroup();

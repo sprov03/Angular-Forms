@@ -1,4 +1,4 @@
-import {CollectionType, FormArrayData, FormControlData, FormGroupData, ModelType, UserLookup} from '../app.decorator';
+import {CollectionType, FormControlData, ModelType, UserLookup} from '../app.decorator';
 import {AppFormGroup} from '../app.form-group';
 import {FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 

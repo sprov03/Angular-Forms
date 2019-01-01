@@ -1,16 +1,8 @@
 import {Address, LookupInfo, Model} from './user';
-import {CollectionType, DateType, FormControlData, Hydrator, ModelType, UserLookup} from '../app.decorator';
-import {FormControl, Validators} from '@angular/forms';
-import {AppFormGroup} from '../app.form-group';
+import {CollectionType, DateType, FormControlData, ModelType, UserLookup} from '../app.decorator';
+import {Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Store} from '../in-memory-data.service';
-
-export interface PropertyFormGroup extends AppFormGroup {
-  controls: {
-    id: FormControl;
-    createdById: FormControl;
-  };
-}
 
 export class Contact extends Model {
   id: string;
@@ -61,16 +53,18 @@ export class Appointment extends Model {
 }
 
 export class Property extends Model {
-  // Custom Hydrator
-  @Hydrator((model: Model) => {
-    const user = Store.users.find(u => u.id === model['deletedById']);
+  constructor(property: Partial<Property>) {
+    super(property);
+
+    // Custom Mappings
+    const user = Store.users.find(u => u.id === this.deletedById);
     if (user) {
-      model['deletedBy'] = {
-        id: model['deletedById'],
+      this.deletedBy = {
+        id: this.deletedById,
         displayLabel: user.displayLabel
       };
     }
-  })
+  }
 
   @FormControlData(null, [Validators.required])
   id: string;
@@ -84,31 +78,20 @@ export class Property extends Model {
   @CollectionType(Appointment)
   appointments: Appointment[];
 
-  @FormControlData('1', [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(20)
-  ])
+  @FormControlData(null, [])
   createdById: string;
-
   @UserLookup('createdById')
   createdBy: LookupInfo;
 
-  @FormControlData('1', [Validators.required])
+  @FormControlData(null, [])
   updatedById: string;
-
   // UserLookup Hydrator
   @UserLookup('updatedById')
   updatedBy: LookupInfo;
 
-  @FormControlData('1', [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(20)
-  ])
+  @FormControlData(null, [])
   deletedById: string;
-
   // @UserLookup('deletedById')
-  // Replaced this one with the custom hydrator for example
+  // Replaced this one with an example of a custom mapping in the constructor
   deletedBy: LookupInfo;
 }

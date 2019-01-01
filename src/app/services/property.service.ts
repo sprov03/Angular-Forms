@@ -16,11 +16,16 @@ export class PropertyService {
 
   getPropertyById(propertyId: string): Observable<Property> {
     return this._http.get('api/properties/' + propertyId)
-      .pipe(map(response => new Property(response)));
+      .pipe(map(response => new Property(response as Partial<Property>)));
   }
 
   createProperty(propertyFormGroup: FormGroup): Observable<Property> {
+    propertyFormGroup.removeControl('id');
+    console.log('Response: ', propertyFormGroup.getRawValue());
     return this._http.post('api/properties', propertyFormGroup.getRawValue())
-      .pipe(map(response => new Property(response)));
+      .pipe(map(response => {
+        console.log('Response: ', response);
+        return new Property(response as Partial<Property>);
+      }));
   }
 }
