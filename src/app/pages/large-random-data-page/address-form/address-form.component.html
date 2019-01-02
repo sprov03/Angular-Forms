@@ -1,0 +1,11 @@
+<ng-container [formGroup]="formGroup">
+  <app-form-field label="street" [control]="formGroup.controls['street']">
+    <input [formControl]="formGroup.controls['street']">
+  </app-form-field>
+  <app-form-field label="zip" [control]="formGroup.controls['zip']">
+    <input [formControl]="formGroup.controls['zip']">
+  </app-form-field>
+  <app-form-field label="state" [control]="formGroup.controls['state']">
+    <input [formControl]="formGroup.controls['state']">
+  </app-form-field>
+</ng-container>

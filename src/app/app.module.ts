@@ -19,6 +19,12 @@ import { InMemoryDataService } from './in-memory-data.service';
 import {HttpClientModule} from '@angular/common/http';
 import { PropertyWithoutInterfacesComponent } from './pages/property-without-interfaces/property-without-interfaces.component';
 import { PropertyWithInterfacesComponent } from './pages/property-with-interfaces/property-with-interfaces.component';
+import { LargeRandomDataPageComponent } from './pages/large-random-data-page/large-random-data-page.component';
+import { PropertyFormComponent } from './pages/large-random-data-page/property-form/property-form.component';
+import { ContactFormComponent } from './pages/large-random-data-page/contact-form/contact-form.component';
+import { AddressFormComponent } from './pages/large-random-data-page/address-form/address-form.component';
+import { AppointmentFormComponent } from './pages/large-random-data-page/appointment-form/appointment-form.component';
+import { UserFormComponent } from './pages/large-random-data-page/user-form/user-form.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,12 @@ import { PropertyWithInterfacesComponent } from './pages/property-with-interface
     TodoFormComponent,
     PropertyWithoutInterfacesComponent,
     PropertyWithInterfacesComponent,
+    LargeRandomDataPageComponent,
+    PropertyFormComponent,
+    ContactFormComponent,
+    AddressFormComponent,
+    AppointmentFormComponent,
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,

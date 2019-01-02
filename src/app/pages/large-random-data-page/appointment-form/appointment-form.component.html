@@ -1,0 +1,8 @@
+<ng-container [formGroup]="formGroup">
+  <app-form-field label="startTime" [control]="formGroup.controls['startTime']">
+    <input type="datetime-local" [formControl]="formGroup.controls['startTime']">
+  </app-form-field>
+  <app-form-field label="endTime" [control]="formGroup.controls['endTime']">
+    <input type="datetime-local" [formControl]="formGroup.controls['endTime']">
+  </app-form-field>
+</ng-container>

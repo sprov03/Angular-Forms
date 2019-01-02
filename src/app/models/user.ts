@@ -3,7 +3,6 @@ import {AppFormGroup} from '../app.form-group';
 import {FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 
 export class Model {
-  // hydrators?: {[key: string]: (model: Model) => any};
   hydrators: ((model: Model) => any)[];
   formControlData: {
     group: {

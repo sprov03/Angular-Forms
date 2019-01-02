@@ -1,0 +1,20 @@
+<ng-container [formGroup]="formGroup">
+  <app-form-field label="id" [control]="formGroup.controls['id']">
+    <input [formControl]="formGroup.controls['id']">
+  </app-form-field>
+  <app-form-field label="firstName" [control]="formGroup.controls['firstName']">
+    <input [formControl]="formGroup.controls['firstName']">
+  </app-form-field>
+  <app-form-field label="lastName" [control]="formGroup.controls['lastName']">
+    <input [formControl]="formGroup.controls['lastName']">
+  </app-form-field>
+
+  <p>User Address Form: </p>
+  <app-address-form [formGroup]="formGroup.controls['address']"></app-address-form>
+
+  <ng-container *ngFor="let todoFormGroup of formGroup.controls['todos'].controls">
+    <p>User Todo From: </p>
+    <app-todo-form [formGroup]="todoFormGroup"></app-todo-form>
+  </ng-container>
+  <button (click)="addTodo()">Add User Todo</button>
+</ng-container>

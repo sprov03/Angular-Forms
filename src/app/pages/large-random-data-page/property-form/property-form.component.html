@@ -1,0 +1,23 @@
+<ng-container [formGroup]="formGroup">
+  <app-form-field label="id" [control]="formGroup.controls['id']">
+    <input [formControl]="formGroup.controls['id']">
+  </app-form-field>
+  <app-form-field label="updatedById" [control]="formGroup.controls['updatedById']">
+    <input [formControl]="formGroup.controls['updatedById']">
+  </app-form-field>
+
+  <ng-container *ngFor="let contactFormGroup of formGroup.controls['contacts'].controls">
+    <p>Contact From:</p>
+    <app-contact-form [formGroup]="contactFormGroup"></app-contact-form>
+  </ng-container>
+  <button (click)="addContact()">Add Contact</button>
+
+  <p>Address From:</p>
+  <app-address-form [formGroup]="formGroup.controls['address']"></app-address-form>
+
+  <ng-container *ngFor="let appointmentFormGroup of formGroup.controls['appointments'].controls">
+    <p>Appointment From:</p>
+    <app-appointment-form [formGroup]="appointmentFormGroup"></app-appointment-form>
+  </ng-container>
+  <button (click)="addAppointment()">Add Contact</button>
+</ng-container>

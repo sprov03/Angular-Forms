@@ -49,7 +49,7 @@ export class Appointment extends Model {
 }
 
 export class Property extends Model {
-  constructor(property: Partial<Property>) {
+  constructor(property: Partial<Property> = {}) {
     super(property);
 
     // Custom Mappings
