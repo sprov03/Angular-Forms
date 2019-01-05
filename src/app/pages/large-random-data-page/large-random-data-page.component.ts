@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LargeDataService} from '../../services/large-data.service';
-import {LargeData} from '../../models/large-data';
-import {AppFormGroup} from '../../app.form-group';
-import {FormArray} from '@angular/forms';
-import {Property} from '../../models/propertie';
-import {Address, User} from '../../models/user';
+import {LargeData, LargeDataFormGroup} from '../../models/large-data';
 
 @Component({
   selector: 'app-large-random-data-page',
@@ -12,7 +8,7 @@ import {Address, User} from '../../models/user';
   styleUrls: ['./large-random-data-page.component.scss']
 })
 export class LargeRandomDataPageComponent implements OnInit {
-  largeDataFormGroup: AppFormGroup;
+  largeDataFormGroup: LargeDataFormGroup;
   largeData: LargeData;
 
   constructor(
@@ -29,10 +25,16 @@ export class LargeRandomDataPageComponent implements OnInit {
     this._largeDataService.createLargeData(this.largeDataFormGroup).subscribe(largeData => {
       this.largeData = largeData;
       this.largeDataFormGroup = new LargeData(largeData).toFormGroup();
-      this.addPropertyToLargeData();
-      this.addUser();
-      this.addAddress();
-      this.addAddress();
+      this.largeDataFormGroup.addProperty();
+      this.largeDataFormGroup.addProperty();
+      this.largeDataFormGroup.addProperty();
+      this.largeDataFormGroup.addUser();
+      this.largeDataFormGroup.addUser();
+      this.largeDataFormGroup.addUser();
+      this.largeDataFormGroup.addUser();
+      this.largeDataFormGroup.addUser();
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.addAddress();
     });
   }
 
@@ -42,20 +44,5 @@ export class LargeRandomDataPageComponent implements OnInit {
       this.largeData = this.largeDataFormGroup.getRawValue();
       this.largeDataFormGroup = new LargeData(this.largeData).toFormGroup();
     });
-  }
-
-  addPropertyToLargeData() {
-    const properteis = this.largeDataFormGroup.get('properties') as FormArray;
-    properteis.controls.push(new Property().toFormGroup());
-  }
-
-  addUser() {
-    const users = this.largeDataFormGroup.get('users') as FormArray;
-    users.controls.push(new User().toFormGroup());
-  }
-
-  addAddress() {
-    const addresses = this.largeDataFormGroup.get('addresses') as FormArray;
-    addresses.controls.push(new Address().toFormGroup());
   }
 }

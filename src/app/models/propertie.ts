@@ -3,6 +3,8 @@ import {CollectionType, DateType, FormControlData, ModelType, UserLookup} from '
 import {Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Store} from '../in-memory-data.service';
+import {PropertyFormGroup} from '../services/property.service';
+import {AppFormBuilder} from '../app-form-buider.service';
 
 export class Contact extends Model {
   id: string;
@@ -89,4 +91,8 @@ export class Property extends Model {
   // @UserLookup('deletedById')
   // Replaced this one with an example of a custom mapping in the constructor
   deletedBy: LookupInfo;
+
+  toFormGroup(): PropertyFormGroup {
+    return AppFormBuilder.buildForm(PropertyFormGroup, this);
+  }
 }

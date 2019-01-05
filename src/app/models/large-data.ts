@@ -1,8 +1,13 @@
 import {Address, LookupInfo, Model, User} from './user';
 import {CollectionType, DateType, FormControlData, ModelType, UserLookup} from '../app.decorator';
-import {Validators} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Property} from './propertie';
+import {AppFormBuilder} from '../app-form-buider.service';
+import {AppFormGroup} from '../app.form-group';
+import {AppFormArray} from '../app.form-array';
+import {PropertyFormGroup} from '../services/property.service';
+import {AddressFormGroup, UserFormGroup} from '../services/user.service';
 
 export class LargeData extends Model {
   @FormControlData(null, [])
@@ -51,4 +56,33 @@ export class LargeData extends Model {
 
   @ModelType(User)
   accountOwner: User;
+
+  toFormGroup(): LargeDataFormGroup {
+    return AppFormBuilder.buildForm(LargeDataFormGroup, this);
+  }
+}
+
+export class LargeDataFormGroup extends AppFormGroup {
+  controls: {
+    id: FormControl;
+    firstProp: FormControl;
+    secondProp: FormControl;
+    thirdProp: FormControl;
+    properties: AppFormArray<PropertyFormGroup>;
+    users: AppFormArray<UserFormGroup>;
+    addresses: AppFormArray<AddressFormGroup>;
+    accountOwner: UserFormGroup;
+  };
+
+  addProperty(property?: Partial<Property>) {
+    this.controls.properties.controls.push(new Property(property).toFormGroup());
+  }
+
+  addAddress(address?: Partial<Address>) {
+    this.controls.addresses.controls.push(new Address(address).toFormGroup());
+  }
+
+  addUser(user?: Partial<User>) {
+    this.controls.users.controls.push(new User(user).toFormGroup());
+  }
 }

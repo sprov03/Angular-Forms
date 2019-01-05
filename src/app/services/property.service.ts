@@ -29,7 +29,7 @@ export class PropertyService {
   }
 }
 
-export interface PropertyFormGroup extends AppFormGroup {
+export class PropertyFormGroup extends AppFormGroup {
   controls: {
     id: FormControl;
     contacts: AppFormArray<ContactFormGroup>;
@@ -41,7 +41,7 @@ export interface PropertyFormGroup extends AppFormGroup {
   };
 }
 
-export interface ContactFormGroup extends AppFormGroup {
+export class ContactFormGroup extends AppFormGroup {
   controls: {
     id: FormControl;
     firstName: FormControl;
@@ -50,7 +50,7 @@ export interface ContactFormGroup extends AppFormGroup {
   };
 }
 
-export interface AppointmentFormGroup extends AppFormGroup {
+export class AppointmentFormGroup extends AppFormGroup {
   controls: {
     id: FormControl;
     startTime: FormControl;

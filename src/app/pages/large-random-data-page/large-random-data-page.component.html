@@ -17,21 +17,21 @@
     <app-property-form [formGroup]="propertyFormGroup"></app-property-form>
     <hr>
   </ng-container>
-  <button (click)="addPropertyToLargeData()">Add Property</button>
+  <button (click)="largeDataFormGroup.addProperty()">Add Property</button>
 
   <ng-container *ngFor="let userFormGroup of largeDataFormGroup.controls['users'].controls">
     <h3>User From: </h3>
     <app-user-form [formGroup]="userFormGroup"></app-user-form>
     <hr>
   </ng-container>
-  <button (click)="addUser()">Add User</button>
+  <button (click)="largeDataFormGroup.addUser()">Add User</button>
 
 
   <ng-container *ngFor="let addressFormGroup of largeDataFormGroup.controls['addresses'].controls">
     <p>Address From:</p>
     <app-address-form [formGroup]="addressFormGroup"></app-address-form>
   </ng-container>
-  <button (click)="addAddress()">Add Contact</button>
+  <button (click)="largeDataFormGroup.addAddress()">Add Address</button>
 
 
   <h3>Account Onwer From:</h3>

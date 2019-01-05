@@ -1,29 +1,15 @@
 import {CollectionType, FormControlData, ModelType, UserLookup} from '../app.decorator';
 import {AppFormGroup} from '../app.form-group';
-import {FormArray, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Validators} from '@angular/forms';
+import {Formable} from './formable';
+import {AppFormBuilder} from '../app-form-buider.service';
+import {AddressFormGroup, UserFormGroup} from '../services/user.service';
 
-export class Model {
+export class Model implements Formable {
   hydrators: ((model: Model) => any)[];
-  formControlData: {
-    group: {
-      type: string,
-      defaultValue: any,
-      validators: ValidatorFn[],
-      dataMap: (value: any) => any,
-      demapper: (rawValue: any) => any
-    },
-    controls: {
-      [key: string]: {
-        type: string,
-        defaultValue: any,
-        validators: ValidatorFn[],
-        dataMap: (value: any) => any,
-        demapper: ((rawValue: any) => any)
-      }
-    }
-  };
+  formControlData?;
 
-  constructor (model = {}) {
+  constructor(model = {}) {
     for (const key in model) {
       if (model.hasOwnProperty(key)) {
         this[key] = model[key];
@@ -37,56 +23,11 @@ export class Model {
     }
   }
 
-  toFormGroup(): AppFormGroup {
-    const formGroup = new AppFormGroup();
-    if (!this.formControlData) {
-      return formGroup;
-    }
-    formGroup.setValidators(this.formControlData.group.validators);
-
-    for (const key in this.formControlData.controls) {
-      const data = this.formControlData.controls[key];
-      if (data.type === 'FormControl') {
-        // Overwrite default value
-        if (this[key] !== null && this[key] !== undefined) {
-          if (data.dataMap) {
-            data.defaultValue = data.dataMap(this[key]);
-          } else {
-            data.defaultValue = this[key];
-          }
-        }
-        if (data.demapper) {
-          formGroup.setDemapper(data.demapper);
-        }
-
-        formGroup.setControl(key, new FormControl(data.defaultValue, data.validators));
-      }
-      if (data.type === 'FormGroup') {
-        const subFormGroup = this[key].toFormGroup();
-        subFormGroup.setValidators(data.validators);
-        if (data.demapper) {
-          subFormGroup.setDemapper(data.demapper);
-        }
-        formGroup.setControl(key, subFormGroup);
-      }
-      if (data.type === 'FormArray') {
-        const formArray = new FormArray([], data.validators);
-        if (this[key]) {
-          this[key].forEach(model => {
-            const subFormGroup = model.toFormGroup();
-            if (data.demapper) {
-              subFormGroup.setDemapper(data.demapper);
-            }
-            formArray.controls.push(subFormGroup);
-          });
-        }
-        formGroup.setControl(key, formArray);
-      }
-    }
-
-    return formGroup;
+   toFormGroup(): AppFormGroup {
+    return AppFormBuilder.buildForm(AppFormGroup, this);
   }
 }
+
 
 export class LookupInfo {
   id: string;
@@ -135,6 +76,10 @@ export class Address extends Model {
     Validators.maxLength(20)
   ])
   state: string;
+
+  toFormGroup(): AddressFormGroup {
+    return AppFormBuilder.buildForm(AddressFormGroup, this);
+  }
 }
 
 export class User extends Model {
@@ -160,4 +105,8 @@ export class User extends Model {
 
   @ModelType(Address, [Validators.required])
   address: Address;
+
+  toFormGroup(): UserFormGroup {
+    return AppFormBuilder.buildForm(UserFormGroup, this);
+  }
 }

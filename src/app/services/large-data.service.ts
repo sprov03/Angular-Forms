@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {LargeData} from '../models/large-data';
 import {map} from 'rxjs/operators';
-import {FormGroup} from '@angular/forms';
 import {AppFormGroup} from '../app.form-group';
 
 @Injectable({

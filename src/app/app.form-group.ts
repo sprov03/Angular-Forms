@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
+import {AppFormArray} from './app.form-array';
+import {Model} from './models/user';
 
 @Injectable({providedIn: 'root'})
 export class AppFormGroup extends FormGroup {
@@ -15,6 +17,14 @@ export class AppFormGroup extends FormGroup {
   setControls(controls: {[key: string]: AbstractControl | any}) {
     for (const key in controls) {
       this.setControl(key, controls[key]);
+    }
+  }
+
+  setCollectionData(formArray: AppFormArray<any>, dataTypeRef: typeof Model, collection: Model[]) {
+    if (collection) {
+      collection.forEach(data => {
+        formArray.controls.push(new dataTypeRef(data).toFormGroup());
+      });
     }
   }
 

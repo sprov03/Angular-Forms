@@ -13,7 +13,7 @@ export class UserFormGroup extends AppFormGroup {
     firstName: new FormControl('', []),
     lastName: new FormControl('', []),
     todos: new AppFormArray<TodoFormGroup>([]),
-    address: new Address().toFormGroup() as AddressFormGroup
+    address: new Address().toFormGroup()
   };
 
   constructor (private user: Partial<User> = {}) {
@@ -21,20 +21,18 @@ export class UserFormGroup extends AppFormGroup {
     this.setControls(this.controls);
     this.patchValue({...user});
 
-    user.todos.forEach(todo => {
-      this.controls.todos.controls.push(new Todo(todo).toFormGroup() as TodoFormGroup);
-    });
+    this.setCollectionData(this.controls.todos, Todo, user.todos);
   }
 }
 
-export interface TodoFormGroup extends AppFormGroup {
+export class TodoFormGroup extends AppFormGroup {
   controls: {
     label: FormControl;
     description: FormControl;
   };
 }
 
-export interface AddressFormGroup extends AppFormGroup {
+export class AddressFormGroup extends AppFormGroup {
   controls: {
     zip: FormControl;
     state: FormControl;
