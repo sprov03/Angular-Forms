@@ -3,7 +3,7 @@ import {AppFormGroup} from '../app.form-group';
 import {Validators} from '@angular/forms';
 import {Formable} from './formable';
 import {AppFormBuilder} from '../app-form-buider.service';
-import {AddressFormGroup, UserFormGroup} from '../services/user.service';
+import {AddressFormGroup, TodoFormGroup, UserFormGroup} from '../services/user.service';
 
 export class Model implements Formable {
   hydrators: ((model: Model) => any)[];
@@ -53,6 +53,10 @@ export class Todo extends Model {
   ])
   description: string;
   completed: boolean;
+
+  toFormGroup(): TodoFormGroup {
+    return AppFormBuilder.buildForm(TodoFormGroup, this);
+  }
 }
 
 export class Address extends Model {

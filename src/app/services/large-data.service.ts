@@ -20,11 +20,13 @@ export class LargeDataService {
 
   createLargeData(formGroup: AppFormGroup): Observable<LargeData> {
     formGroup.removeControl('id');
+    console.log('Server Data: ', formGroup.getRawValue());
     return this._http.post('api/largeData', formGroup.getRawValue())
       .pipe(map(response => new LargeData(response as Partial<LargeData>)));
   }
 
   updateLargeData(id: string, formGroup: AppFormGroup) {
+    console.log('Server Data: ', formGroup.getRawValue());
     return this._http.put('api/largeData/' + id, formGroup.getRawValue())
       .pipe(map(response => new LargeData(response as Partial<LargeData>)));
   }

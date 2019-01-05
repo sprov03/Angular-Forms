@@ -3,7 +3,7 @@ import {CollectionType, DateType, FormControlData, ModelType, UserLookup} from '
 import {Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Store} from '../in-memory-data.service';
-import {PropertyFormGroup} from '../services/property.service';
+import {ContactFormGroup, PropertyFormGroup} from '../services/property.service';
 import {AppFormBuilder} from '../app-form-buider.service';
 
 export class Contact extends Model {
@@ -29,6 +29,10 @@ export class Contact extends Model {
     Validators.maxLength(20)
   ])
   displayLabel: string;
+
+  toFormGroup(): ContactFormGroup {
+    return AppFormBuilder.buildForm(ContactFormGroup, this);
+  }
 }
 
 export class Appointment extends Model {

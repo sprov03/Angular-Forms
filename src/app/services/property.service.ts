@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {Property} from '../models/propertie';
+import {Contact, Property} from '../models/propertie';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AppFormGroup} from '../app.form-group';
 import {AppFormArray} from '../app.form-array';
@@ -39,6 +39,10 @@ export class PropertyFormGroup extends AppFormGroup {
     updatedById: FormControl;
     deletedById: FormControl;
   };
+
+  addContact(contact?: Partial<Contact>) {
+    this.controls.contacts.controls.push(new Contact(contact).toFormGroup());
+  }
 }
 
 export class ContactFormGroup extends AppFormGroup {

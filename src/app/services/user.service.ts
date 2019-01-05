@@ -23,6 +23,10 @@ export class UserFormGroup extends AppFormGroup {
 
     this.setCollectionData(this.controls.todos, Todo, user.todos);
   }
+
+  addTodo(todo?: Partial<Todo>) {
+    this.controls.todos.controls.push(new Todo(todo).toFormGroup());
+  }
 }
 
 export class TodoFormGroup extends AppFormGroup {

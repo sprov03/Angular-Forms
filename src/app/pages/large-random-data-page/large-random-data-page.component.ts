@@ -22,6 +22,8 @@ export class LargeRandomDataPageComponent implements OnInit {
   }
 
   createLargeData() {
+    // This is done this way to generate an id for the Data
+    // (Since i don't want to deal with building mock data for this demo)
     this._largeDataService.createLargeData(this.largeDataFormGroup).subscribe(largeData => {
       this.largeData = largeData;
       this.largeDataFormGroup = new LargeData(largeData).toFormGroup();
@@ -34,6 +36,16 @@ export class LargeRandomDataPageComponent implements OnInit {
         firstName: 'Shawn',
         lastName: 'Pivonka'
       });
+      this.largeDataFormGroup.controls.properties.controls[0].addContact({
+        firstName: 'Testing First Name',
+        lastName: 'Testing Last Name',
+      });
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.addAddress();
+      this.largeDataFormGroup.setAddressesToSomethingFunny('Funny Street Name');
     });
   }
 
