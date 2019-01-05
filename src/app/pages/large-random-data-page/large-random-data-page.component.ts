@@ -25,16 +25,16 @@ export class LargeRandomDataPageComponent implements OnInit {
     this._largeDataService.createLargeData(this.largeDataFormGroup).subscribe(largeData => {
       this.largeData = largeData;
       this.largeDataFormGroup = new LargeData(largeData).toFormGroup();
-      this.largeDataFormGroup.addProperty();
-      this.largeDataFormGroup.addProperty();
-      this.largeDataFormGroup.addProperty();
-      this.largeDataFormGroup.addUser();
-      this.largeDataFormGroup.addUser();
-      this.largeDataFormGroup.addUser();
-      this.largeDataFormGroup.addUser();
-      this.largeDataFormGroup.addUser();
-      this.largeDataFormGroup.addAddress();
-      this.largeDataFormGroup.addAddress();
+      // this.largeDataFormGroup.addProperty();
+      // this.largeDataFormGroup.addProperty();
+      // this.largeDataFormGroup.addProperty();
+      // this.largeDataFormGroup.addUser();
+      // this.largeDataFormGroup.addUser();
+      // this.largeDataFormGroup.addUser();
+      // this.largeDataFormGroup.addUser();
+      // this.largeDataFormGroup.addUser();
+      // this.largeDataFormGroup.addAddress();
+      // this.largeDataFormGroup.addAddress();
     });
   }
 

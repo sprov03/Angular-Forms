@@ -2,24 +2,27 @@
 
 <h2>Large Data From: </h2>
 <form [formGroup]="largeDataFormGroup">
-  <app-form-field label="firstProp" [control]="largeDataFormGroup.controls['firstProp']">
-    <input [formControl]="largeDataFormGroup.controls['firstProp']">
-  </app-form-field>
-  <app-form-field label="secondProp" [control]="largeDataFormGroup.controls['secondProp']">
-    <input [formControl]="largeDataFormGroup.controls['secondProp']">
-  </app-form-field>
-  <app-form-field label="thirdProp" [control]="largeDataFormGroup.controls['thirdProp']">
-    <input [formControl]="largeDataFormGroup.controls['thirdProp']">
+
+  <app-form-field label="firstProp" [group]="largeDataFormGroup" [control]="largeDataFormGroup.controls.firstProp" [groupErrors]="[]">
+    <input [formControl]="largeDataFormGroup.controls.firstProp">
   </app-form-field>
 
-  <ng-container *ngFor="let propertyFormGroup of largeDataFormGroup.controls['properties'].controls">
+  <app-form-field label="secondProp" [control]="largeDataFormGroup.controls.secondProp">
+    <input [formControl]="largeDataFormGroup.controls.secondProp">
+  </app-form-field>
+
+  <app-form-field label="thirdProp" [control]="largeDataFormGroup.controls.thirdProp">
+    <input [formControl]="largeDataFormGroup.controls.thirdProp">
+  </app-form-field>
+
+  <ng-container *ngFor="let propertyFormGroup of largeDataFormGroup.controls.properties.controls">
     <h3>Property Form: </h3>
     <app-property-form [formGroup]="propertyFormGroup"></app-property-form>
     <hr>
   </ng-container>
   <button (click)="largeDataFormGroup.addProperty()">Add Property</button>
 
-  <ng-container *ngFor="let userFormGroup of largeDataFormGroup.controls['users'].controls">
+  <ng-container *ngFor="let userFormGroup of largeDataFormGroup.controls.users.controls">
     <h3>User From: </h3>
     <app-user-form [formGroup]="userFormGroup"></app-user-form>
     <hr>
@@ -27,15 +30,15 @@
   <button (click)="largeDataFormGroup.addUser()">Add User</button>
 
 
-  <ng-container *ngFor="let addressFormGroup of largeDataFormGroup.controls['addresses'].controls">
+  <ng-container *ngFor="let addressFormGroup of largeDataFormGroup.controls.addresses.controls">
     <p>Address From:</p>
     <app-address-form [formGroup]="addressFormGroup"></app-address-form>
   </ng-container>
   <button (click)="largeDataFormGroup.addAddress()">Add Address</button>
 
 
-  <h3>Account Onwer From:</h3>
-  <app-user-form [formGroup]="largeDataFormGroup.controls['accountOwner']"></app-user-form>
+  <h3>Account Owner From:</h3>
+  <app-user-form [formGroup]="largeDataFormGroup.controls.accountOwner"></app-user-form>
 
   <button (click)="updateLargeData()">Save large Data</button>
 </form>
